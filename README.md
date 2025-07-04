@@ -11,7 +11,7 @@ An MLOps learning project with deployment on Google Cloud Run.
 uv sync
 
 # Activate virtual environment
-source .venv/bin/activate  # Linux/Mac
+source .venv/bin/activate  #  Linux/Mac
 ```
 
 ### 2. Project structure
