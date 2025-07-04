@@ -34,8 +34,8 @@ jobs:
     - name: Build Docker image
       run: |
         docker build --platform linux/amd64 -t $SERVICE_NAME .
-        docker tag $SERVICE_NAME gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
-        docker tag $SERVICE_NAME gcr.io/$PROJECT_ID/$SERVICE_NAME:latest
+        docker tag $SERVICE_NAME $REGISTRY/$PROJECT_ID/mlops-demo/$SERVICE_NAME:$GITHUB_SHA
+        docker tag $SERVICE_NAME $REGISTRY/$PROJECT_ID/mlops-demo/$SERVICE_NAME:latest
     
     - name: Push to Container Registry
       run: |
