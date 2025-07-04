@@ -34,18 +34,16 @@ jobs:
     - name: Build Docker image
       run: |
         docker build --platform linux/amd64 -t $SERVICE_NAME .
-        docker tag $SERVICE_NAME $REGISTRY/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
         docker tag $SERVICE_NAME $REGISTRY/$PROJECT_ID/$SERVICE_NAME:latest
     
     - name: Push to Container Registry
       run: |
-        docker push $REGISTRY/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
         docker push $REGISTRY/$PROJECT_ID/$SERVICE_NAME:latest
     
     - name: Deploy to Cloud Run
       run: |
         gcloud run deploy $SERVICE_NAME \
-          --image $REGISTRY/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA \
+          --image $REGISTRY/$PROJECT_ID/$SERVICE_NAME:latest \
           --platform managed \
           --region $REGION \
           --allow-unauthenticated \
@@ -53,7 +51,7 @@ jobs:
           --memory 1Gi \
           --cpu 1 \
           --max-instances 10 \
-          --set-env-vars="ENV=production,MODEL_VERSION=$GITHUB_SHA"
+          --set-env-vars="ENV=production,MODEL_VERSION=latest"
     
     - name: Get service URL
       run: |
