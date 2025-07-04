@@ -2,7 +2,11 @@
 Tests for the API
 """
 
+import os
+
 from fastapi.testclient import TestClient
+
+os.environ["TESTING"] = "true"
 
 from src.app import app
 

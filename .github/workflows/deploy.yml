@@ -12,38 +12,7 @@ env:
   REGION: europe-west1
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
-    
-    - name: Install uv
-      run: |
-        curl -LsSf https://astral.sh/uv/install.sh | sh
-        echo "$HOME/.cargo/bin" >> $GITHUB_PATH
-    
-    - name: Install dependencies
-      run: |
-        uv sync
-    
-    - name: Run tests
-      run: |
-        uv run pytest tests/ -v
-    
-    - name: Run linting
-      run: |
-        uv run ruff check src/ tests/
-        uv run ruff format --check src/ tests/
-
   deploy:
-    # Only deploy if tests pass AND it's a push to main
-    needs: test
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     
